@@ -854,7 +854,13 @@ class AtomEnvironment {
         commands: this.commands,
         history: this.history,
         config: this.config,
-        open: paths => this.open({pathsToOpen: paths})
+        open: paths => {
+            if (process.platform === 'darwin') {
+                this.open({pathsToOpen: paths, newWindow: true})
+            } else {
+                this.open({pathsToOpen: paths})
+            }
+        }
       })
       this.reopenProjectMenuManager.update()
     })
